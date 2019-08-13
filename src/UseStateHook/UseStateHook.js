@@ -22,4 +22,52 @@ import React, { useState } from "react";
     https://reactjs.org/docs/hooks-reference.html#usereducer
 */
 
-export const Form = () => {};
+export const Form = () => {
+
+  const [ email, putEmail ] = useState('');
+  const [ password, putPassword ] = useState('');
+  const [ isAuthorized, putAuthorized ] = useState('');
+  
+  function handleChange(e) {
+    const name = e.target.name;
+    const val = e.target.value;
+
+    name === 'email' ? putEmail(val) : putPassword(val);
+  }
+
+  
+  function handleSubmit(e) {
+    e.preventDefault();
+    
+    if (email && password) putAuthorized(true);
+  }
+
+
+  return (
+    
+    <React.Fragment>
+      <input
+        value={email}
+        onChange={handleChange}
+        placeholder="email"
+        name="email"
+        data-testid="email-input"
+      />
+      <input
+        value={password}
+        onChange={handleChange}
+        placeholder="password"
+        name="password"
+        data-testid="password-input"
+      />
+      <button 
+        onClick={handleSubmit} 
+        data-testid="submit">
+        Войти
+      </button>
+      { isAuthorized && <p data-testid="success-message">Вы вошли</p> }
+    </React.Fragment>
+
+  )
+
+};
